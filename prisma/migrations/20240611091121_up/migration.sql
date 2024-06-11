@@ -11,7 +11,7 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "List" (
     "id" TEXT NOT NULL,
-    "contect" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
     "created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT NOT NULL,

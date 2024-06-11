@@ -23,7 +23,7 @@ model User {
 
 model List {
   id      String   @id @default(uuid())
-  contect String
+  content String
   created DateTime @default(now())
   updated DateTime @default(now())
   user    User     @relation(fields: [userId], references: [id])

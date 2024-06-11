@@ -1,1 +1,4 @@
-export class CreateListDto {}
+export class CreateListDto {
+    content: string
+    // userId: string
+}

@@ -1,26 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseGuards } from '@nestjs/common';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
+import { PrismaService } from 'src/prisma.service';
+import { List } from '@prisma/client';
+import { JwtAuthGuard } from 'src/lib/db/authGuard';
 
+@UseGuards(JwtAuthGuard)
 @Injectable()
 export class ListService {
-  create(createListDto: CreateListDto) {
-    return 'This action adds a new list';
+
+  constructor(
+    private readonly prisma: PrismaService
+  ) { }
+
+  async create(createListDto: CreateListDto, userId: string) {
+    return await this.prisma.list.create({
+      data: {
+        content: createListDto.content,
+        userId: userId
+      }
+    });
+
   }
 
-  findAll() {
-    return `This action returns all list`;
+
+  async findAll(): Promise<List[]> {
+    return await this.prisma.list.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} list`;
+  async findOne(id: string) {
+    return await this.prisma.list.findUnique({
+      where: { id: id },
+    });
   }
 
-  update(id: number, updateListDto: UpdateListDto) {
-    return `This action updates a #${id} list`;
+  async update(id: string, updateListDto: UpdateListDto) {
+    const list = await this.prisma.list.update({
+      where: { id: id },
+      data: updateListDto
+    });
+    return list
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} list`;
+  async remove(id: string) {
+    return await this.prisma.list.delete({ where: { id: id } })
   }
 }

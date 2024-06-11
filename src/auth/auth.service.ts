@@ -45,7 +45,7 @@ export class AuthService {
       throw new HttpException("Invalid password", HttpStatus.UNAUTHORIZED);
     }
 
-    const payload = { email: user.email, sub: user.id }; // Include user id in the payload
+    const payload = { email: user.email, id: user.id }; // Include user id in the payload
     const token = this.jwtService.sign(payload);
     return { access_token: token };
   }
